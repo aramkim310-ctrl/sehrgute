@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>독일 크리스마스의 마법: 전통과 문화 완벽 가이드</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fdf6e3;
+            --text-color: #2c3e50;
+            --card-bg: #ffffff;
+            --accent-color: #c0392b; /* Christmas Red */
+            --accent-secondary: #27ae60; /* Christmas Green */
+            --gold: #f1c40f;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a1a2e;
+            --text-color: #e0e0e0;
+            --card-bg: #16213e;
+            --accent-color: #e74c3c;
+            --accent-secondary: #2ecc71;
+            --gold: #f39c12;
+            --border-color: #2c3e50;
+            --shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* 눈 내리는 효과 */
+        #snow-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* 스크롤 진행바 */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: var(--accent-color);
+            width: 0%;
+            z-index: 10001;
+            transition: width 0.1s;
+        }
+
+        /* 헤더 & 테마 토글 */
+        header {
+            text-align: center;
+            padding: 4rem 1rem;
+            position: relative;
+            background: linear-gradient(135deg, var(--accent-color), var(--bg-color));
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .theme-switch-wrapper {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            z-index: 10000;
+        }
+        .theme-switch {
+            display: inline-block;
+            height: 34px;
+            position: relative;
+            width: 60px;
+        }
+        .theme-switch input { display: none; }
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            background-color: white;
+            bottom: 4px;
+            content: "";
+            height: 26px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 26px;
+            border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--accent-secondary); }
+        input:checked + .slider:before { transform: translateX(26px); }
+
+        /* 컨테이너 */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* 섹션 공통 스타일 */
+        section {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        h2 {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        /* 아코디언 텍스트 (Read More) */
+        .content-text {
+            max-height: 150px;
+            overflow: hidden;
+            position: relative;
+            transition: max-height 0.5s ease;
+        }
+        .content-text.expanded {
+            max-height: 2000px;
+        }
+        .content-text::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background: linear-gradient(transparent, var(--card-bg));
+            transition: opacity 0.3s;
+        }
+        .content-text.expanded::after { opacity: 0; pointer-events: none; }
+        
+        .read-more-btn {
+            background: var(--gold);
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #333;
+            transition: transform 0.2s;
+        }
+        .read-more-btn:hover { transform: scale(1.05); }
+
+        /* 테이블 스타일 */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        .data-table th, .data-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .data-table th {
+            background-color: rgba(0,0,0,0.05);
+            color: var(--accent-color);
+        }
+
+        /* 1. 대림절 초 애니메이션 */
+        .advent-candles {
+            display: flex;
+            justify-content: space-around;
+            margin: 2rem 0;
+            height: 150px;
+            align-items: flex-end;
+        }
+        .candle {
+            width: 40px;
+            height: 100px;
+            background: #e74c3c;
+            position: relative;
+            border-radius: 5px;
+        }
+        .flame {
+            width: 20px;
+            height: 30px;
+            background: #f1c40f;
+            border-radius: 50% 50% 20% 20%;
+            position: absolute;
+            top: -35px;
+            left: 10px;
+            box-shadow: 0 0 10px #f39c12;
+            animation: flicker 1s infinite alternate;
+            opacity: 0.2; /* 기본 꺼짐 */
+            transition: opacity 1s;
+        }
+        .candle:nth-child(1) .flame { animation-delay: 0s; }
+        .candle:nth-child(2) .flame { animation-delay: 0.2s; }
+        @keyframes flicker {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+        .candle-controls button {
+            margin: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--accent-secondary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* 2. 어드벤트 캘린더 그리드 */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            margin: 2rem 0;
+        }
+        .cal-door {
+            background: var(--accent-secondary);
+            color: white;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+        .cal-door:hover { transform: rotateY(180deg); background: var(--gold); color: #333; }
+        
+        /* 3. 음식 카드 슬라이더 (Horizontal Scroll) */
+        .food-slider {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding-bottom: 20px;
+            scroll-snap-type: x mandatory;
+        }
+        .food-card {
+            min-width: 250px;
+            background: var(--bg-color);
+            padding: 1.5rem;
+            border-radius: 10px;
+            scroll-snap-align: start;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s;
+        }
+        .food-card:hover { transform: translateY(-10px); box-shadow: var(--shadow); }
+        .food-icon { font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem; text-align: center; }
+
+        /* 4. 뒤집히는 카드 (Decor) */
+        .flip-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .flip-card {
+            background-color: transparent;
+            height: 250px;
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            border-radius: 10px;
+        }
+        .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border-radius: 10px;
+            padding: 1rem;
+        }
+        .flip-card-front { background-color: var(--accent-color); color: white; }
+        .flip-card-back { background-color: var(--gold); color: #333; transform: rotateY(180deg); }
+
+        /* 5. 차트 (CSS Bar Chart) */
+        .chart-container {
+            margin: 2rem 0;
+            padding: 1rem;
+            background: rgba(0,0,0,0.02);
+            border-radius: 10px;
+        }
+        .bar-group { margin-bottom: 1rem; }
+        .bar-label { font-size: 0.9rem; margin-bottom: 0.3rem; }
+        .bar-bg { background: #ddd; height: 20px; border-radius: 10px; overflow: hidden; }
+        .bar-fill { height: 100%; background: var(--accent-color); width: 0; transition: width 1.5s ease-out; }
+
+        /* 6. 퀴즈 */
+        .quiz-box {
+            background: var(--bg-color);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px dashed var(--accent-secondary);
+        }
+        .quiz-btn {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn-yes { background: var(--accent-secondary); color: white; }
+        .btn-no { background: var(--accent-color); color: white; }
+        #quiz-result { margin-top: 1rem; font-weight: bold; }
+
+        /* 반응형 미디어 쿼리 */
+        @media (max-width: 768px) {
+            .calendar-grid { grid-template-columns: repeat(4, 1fr); }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 눈 내리는 캔버스 -->
+<canvas id="snow-canvas"></canvas>
+<div id="progress-bar"></div>
+
+<header>
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider"></div>
+        </label>
+        <span style="margin-left: 10px; font-size: 0.8rem; color: #fff;">테마 변경</span>
+    </div>
+    <h1>독일 크리스마스의 마법</h1>
+    <p>전통과 문화, 그리고 맛있는 음식으로 떠나는 여행</p>
+</header>
+
+<div class="container">
+
+    <!-- 1페이지: 시작과 의미 -->
+    <section id="sec-1">
+        <h2><i class="fas fa-star"></i> 01. 바이나흐텐(Weihnachten)의 의미</h2>
+        <div class="content-text">
+            <p>독일에서 크리스마스는 단순한 하루의 행사가 아니라 **'신성한 밤들'이라는 뜻의 바이나흐텐(Weihnachten)**으로 불리는 긴 축제 기간입니다. 어둡고 칙칙한 독일의 겨울을 따뜻하게 밝히는 이 시기는 가족과 이웃이 함께 모여 유대를 다지는 가장 큰 명절입니다.</p>
+            <p>11월부터 시작되는 우울한 날씨를 이겨내게 하는 정서적 버팀목이며, 베를린 같은 대도시가 텅 빌 정도로 가족을 만나러 가는 민족 대이동이 일어납니다. 대림절을 바탕으로 초를 켜고 달력을 여는 등 고유의 문화가 정착되어 있습니다.</p>
+            <table class="data-table">
+                <tr><th>구분</th><th>주요 특징</th><th>내용</th></tr>
+                <tr><td>공식 명칭</td><td>바이나흐텐</td><td>'신성한 밤들' (복수형)</td></tr>
+                <tr><td>준비 기간</td><td>대림절 (Advent)</td><td>성탄 전 4주간</td></tr>
+            </table>
+        </div>
+        <button class="read-more-btn" onclick="toggleReadMore(this)">더 읽기</button>
+    </section>
+
+    <!-- 2페이지: 대림절 + 인터랙티브 캔들 -->
+    <section id="sec-2">
+        <h2><i class="fas fa-fire"></i> 02. 대림절의 촛불</h2>
+        <p>매주 일요일마다 초를 하나씩 켜며 성탄을 기다립니다. 아래 버튼을 눌러 대림절의 진행을 체험해보세요.</p>
+        <div class="advent-candles">
+            <div class="candle"><div class="flame" id="f1"></div></div>
+            <div class="candle"><div class="flame" id="f2"></div></div>
+            <div class="candle"><div class="flame" id="f3"></div></div>
+            <div class="candle"><div class="flame" id="f4"></div></div>
+        </div>
+        <div class="candle-controls" style="text-align:center;">
+            <button onclick="lightCandle(1)">1주차</button>
+            <button onclick="lightCandle(2)">2주차</button>
+            <button onclick="lightCandle(3)">3주차</button>
+            <button onclick="lightCandle(4)">4주차</button>
+        </div>
+        <div class="content-text" style="margin-top:1rem;">
+            <p>독일의 크리스마스는 대림절의 시작과 함께 본격화됩니다. 성탄절 전 네 번의 일요일을 거꾸로 계산하여 시작되는 이 기간에는 매주 일요일마다 특별한 의식을 치릅니다. 5~10유로 내외의 작은 선물을 주고받으며 부담 없는 마음을 전합니다.</p>
+        </div>
+        <button class="read-more-btn" onclick="toggleReadMore(this)">더 읽기</button>
+    </section>
+
+    <!-- 3페이지: 어드벤트 크란츠 (설명 위주) -->
+    <section id="sec-3">
+        <h2><i class="fas fa-holly-berry"></i> 03. 어드벤트 크란츠</h2>
+        <div class="content-text">
+            <p>어드벤트 크란츠(Adventskranz)는 독일 가정의 크리스마스 장식 중 가장 핵심적인 요소입니다. 전나무 잎으로 만든 녹색 화환에 네 개의 초를 꽂아 만드는데, 루터교의 관습에서 시작되었습니다. 전통적으로 솔방울, 시나몬 등으로 장식하며 붉은 초를 주로 사용합니다.</p>
+            <p>최근에는 금색이나 은색 초를 사용해 현대적으로 꾸미기도 하며, 직접 재료를 사서 만드는 DIY 문화가 발달해 있습니다. 솔잎의 향기가 집안을 채워 심신 안정을 돕습니다.</p>
+        </div>
+        <button class="read-more-btn" onclick="toggleReadMore(this)">더 읽기</button>
+    </section>
+
+    <!-- 4페이지: 어드벤트 캘린더 (인터랙티브) -->
+    <section id="sec-4">
+        <h2><i class="fas fa-calendar-alt"></i> 04. 어드벤트 캘린더</h2>
+        <p>날짜를 클릭하여 숨겨진 메시지를 확인해보세요! (24일에는 특별한 것이?)</p>
+        <div class="calendar-grid" id="calendar-grid">
+            <!-- JS로 생성됨 -->
+        </div>
+        <div class="content-text">
+            <p>12월 1일부터 24일까지 매일 하나씩 창문을 열어보며 크리스마스를 기다리는 달력입니다. 아이들에게는 인내심과 매일의 기쁨을 줍니다. 최근에는 성인들을 위한 화장품, 차(Tea) 캘린더 등 다양한 마케팅 상품이 쏟아져 나옵니다.</p>
+        </div>
+        <button class="read-more-btn" onclick="toggleReadMore(this)">더 읽기</button>
+    </section>
+
+    <!-- 5페이지: 니콜라우스 (비교 테이블) -->
+    <section id="sec-5">
+        <h2><i class="fas fa-socks"></i> 05. 성 니콜라우스 데이 vs 산타</h2>
+        <p>독일의 산타는 12월 6일에 옵니다. 미국식 산타와의 차이점을 비교해보세요.</p>
+        <table class="data-table">
+            <tr>
+                <th>항목</th>
+                <th>독일 (성 니콜라우스)</th>
+                <th>미국 (산타클로스)</th>
+            </tr>
+            <tr>
+                <td>방문 날짜</td>
+                <td>12월 6일 새벽</td>
+                <td>12월 24일 밤</td>
+            </tr>
+            <tr>
+                <td>선물 장소</td>
+                <td>문 앞의 부츠(장화)</td>
+                <td>벽난로의 양말</td>
+            </tr>
+            <tr>
+                <td>복장</td>
+                <td>주교의 복장</td>
+                <td>빨간 옷과 모자</td>
+            </tr>
+        </table>
+        <div class="content-text">
+            <p>아이들은 12월 5일 밤에 부츠를 깨끗하게 닦아 문 앞에 놓으며, 다음 날 아침 그 안에 담긴 선물과 사탕을 발견하게 됩니다. 이는 4세기 주교였던 성 니콜라우스의 자선 활동에서 유래했습니다.</p>
+        </div>
+        <button class="read-more-btn" onclick="toggleReadMore(this)">더 읽기</button>
+    </section>
+
+    <!-- 6~11페이지: 마켓 음식 슬라이더 -->
+    <section id="sec-food">
+        <h2><i class="fas fa-utensils"></i> 06-11. 크리스마스 마켓의 미식</h2>
+        <p>가로로 스크롤하여 독일 마켓의 대표 음식들을 확인하세요.</p>
+        <div class="food-slider">
+            <!-- 음식 1 -->
+            <div class="food-card">
+                <div class="food-icon"><i class="fas fa-bacon"></i></div>
+                <h3>슈뱅커 & 소시지</h3>
+                <p>회전 그릴에서 구운 소시지. 빵 사이에 끼워 먹는 독일인의 영혼의 음식.</p>
+            </div>
+            <!-- 음식 2 -->
+            <div class="food-card">
+                <div class="food-icon"><i class="fas fa-cookie"></i></div>
+                <h3>라이베쿠흔</h3>
+                <p>독일식 감자전. 사과 소스(Apfelmus)에 찍어 먹는 단짠의 조화.</p>
+            </div>
+            <!-- 음식 3 -->
+            <div class="food-card">
+                <div class="food-icon"><i class="fas fa-fire-alt"></i></div>
+                <h3>군밤</h3>
+                <p>추운 겨울 손을 녹여주는 따뜻한 봉투. 적은 양이 아쉽지만 향수는 가득.</p>
+            </div>
+            <!-- 음식 4 -->
+            <div class="food-card">
+                <div class="food-icon"><i class="fas fa-cheese"></i></div>
+                <h3>라클래트</h3>
+                <p>거대한 통치즈를 녹여 빵 위에 얹어 먹는 꼬릿하고 고소한 유혹.</p>
+            </div>
+            <!-- 음식 5 -->
+            <div class="food-card">
+                <div class="food-icon"><i class="fas fa-fish"></i></div>
+                <h3>플램락스</h3>
+                <p>장작불 옆에서 훈연되는 연어 구이. 마켓에서 즐기는 최고의 사치.</p>
+            </div>
+        </div>
+        <div class="content-text" style="margin-top:1rem;">
+            <p>독일의 크리스마스 마켓은 토텐존타크 이후 개장합니다. 소시지부터 감자전, 치즈, 연어까지 추운 날씨를 이기게 해주는 고칼로리의 맛있는 음식들이 가득합니다. 각 음식마다 500자 이상의 이야기가 담겨 있을 만큼 역사와 전통이 깊습니다.</p>
+        </div>
+        <button class="read-more-btn" onclick="toggleReadMore(this)">더 읽기</button>
+    </section>
+
+    <!-- 12페이지: 글뤼바인 -->
+    <section id="sec-12">
+        <h2><i class="fas fa-wine-glass-alt"></i> 12. 마켓의 주인공, 글뤼바인</h2>
+        <div style="text-align:center; margin: 1rem 0;">
+            <i class="fas fa-mug-hot" style="font-size: 4rem; color:var(--accent-color);"></i>
+        </div>
+        <div class="content-text">
+            <p>글뤼바인(Glühwein)은 와인에 시나몬, 정향 등을 넣어 따뜻하게 데워 마시는 음료입니다. 마켓을 걷는 사람들의 손에는 항상 이 따뜻한 머그컵이 들려 있습니다. 컵 보증금(Pfand) 제도가 있어 컵을 반납하면 돈을 돌려받거나, 기념품으로 가질 수 있습니다. 술을 못 마시는 사람을 위한 '킨더푼슈'도 있습니다.</p>
+        </div>
+        <button class="read-more-btn" onclick="toggleReadMore(this)">더 읽기</button>
+    </section>
+
+    <!-- 13-16페이지: 전통 공예품 (플립 카드) -->
+    <section id="sec-crafts">
+        <h2><i class="fas fa-tree"></i> 13-16. 전통과 공예품</h2>
+        <div class="flip-container">
+            <!-- 슈톨렌 -->
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <i class="fas fa-bread-slice" style="font-size:3rem; margin-bottom:10px;"></i>
+                        <h3>슈톨렌</h3>
+                        <p>독일 대표 크리스마스 케이크</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>아기 예수를 상징하는 모양. 시간이 지날수록 숙성되어 맛이 깊어지며, 가운데부터 썰어 먹습니다.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- 렙쿠헨 -->
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <i class="fas fa-heart" style="font-size:3rem; margin-bottom:10px;"></i>
+                        <h3>렙쿠헨</h3>
+                        <p>독일식 진저브레드</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>꿀과 생강이 들어간 쿠키. 중세 수도원에서 유래했으며 하트 모양 장식이 유명합니다.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- 피라미드 -->
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <i class="fas fa-landmark" style="font-size:3rem; margin-bottom:10px;"></i>
+                        <h3>피라미드</h3>
+                        <p>빙글빙글 도는 목공예 탑</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>촛불의 열기로 상단 날개가 회전하는 구조. 광부들의 손재주에서 탄생했습니다.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- 호두까기 인형 -->
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <i class="fas fa-robot" style="font-size:3rem; margin-bottom:10px;"></i>
+                        <h3>호두까기 인형</h3>
+                        <p>악령을 물리치는 수호신</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>원래는 못생기고 강인한 턱으로 가족을 보호하는 존재였습니다. 차이콥스키 발레로 유명해졌죠.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 17페이지: 경제 (차트) -->
+    <section id="sec-17">
+        <h2><i class="fas fa-chart-line"></i> 17. 관세 폭풍과 호두까기 인형</h2>
+        <p>미국의 관세 정책이 독일 전통 공예품에 미친 영향을 시각화했습니다.</p>
+        <div class="chart-container">
+            <div class="bar-group">
+                <div class="bar-label">관세 부과 전 가격 지수 (100)</div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 80%; background:#27ae60;"></div></div>
+            </div>
+            <div class="bar-group">
+                <div class="bar-label">관세 부과 후 가격 지수 (125)</div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 100%; background:#c0392b;"></div></div>
+            </div>
+        </div>
+        <div class="content-text">
+            <p>최근 독일의 호두까기 인형 제조사는 미국의 관세 정책(15%)과 소액면세제도 폐지로 큰 타격을 입었습니다. 매출의 대부분이 미국에서 발생하기 때문입니다. 하지만 '슈타인바흐' 같은 명품 브랜드에 대한 충성심은 여전히 높아, 제조사들은 미국 현지 창고를 짓는 등 자구책을 마련하고 있습니다.</p>
+        </div>
+        <button class="read-more-btn" onclick="toggleReadMore(this)">더 읽기</button>
+    </section>
+
+    <!-- 18-19페이지: 이브와 전통 -->
+    <section id="sec-18">
+        <h2><i class="fas fa-church"></i> 18-19. 크리스마스 이브와 낭만</h2>
+        <div class="content-text">
+            <p>독일은 12월 24일 저녁에 온 가족이 모여 선물을 개봉합니다. 아빠가 비밀리에 트리를 장식하고 아이들을 부르는 깜짝 이벤트가 전통입니다. 자정에는 성당 미사에 참석합니다.</p>
+            <p>마켓이나 가정에서는 '겨우살이(Mistletoe)' 아래에서 키스하는 낭만적인 규칙이 있습니다. 음악은 신나는 미국식 캐럴보다는 경건한 클래식이나 성가가 주를 이룹니다.</p>
+        </div>
+        <button class="read-more-btn" onclick="toggleReadMore(this)">더 읽기</button>
+    </section>
+
+    <!-- 20페이지: 현대의 변화 (퀴즈) -->
+    <section id="sec-20">
+        <h2><i class="fas fa-globe"></i> 20. 현대의 변화와 퀴즈</h2>
+        <div class="content-text">
+            <p>최근 독일 마켓에는 한국 음식(김밥, 소주)도 등장하고, 채식주의자를 위한 메뉴도 늘어나고 있습니다. 전통과 현대가 조화롭게 섞이고 있습니다.</p>
+        </div>
+        <div class="quiz-box">
+            <h3>독일 크리스마스 상식 퀴즈</h3>
+            <p>Q. 독일의 산타클로스는 12월 24일에 온다?</p>
+            <button class="quiz-btn btn-yes" onclick="checkQuiz(true)">O (그렇다)</button>
+            <button class="quiz-btn btn-no" onclick="checkQuiz(false)">X (아니다)</button>
+            <div id="quiz-result"></div>
+        </div>
+    </section>
+
+    <footer style="text-align:center; padding: 2rem; opacity: 0.7;">
+        <p>&copy; 2024 German Christmas Guide. All rights reserved.</p>
+    </footer>
+
+</div>
+
+<script>
+    // 1. 다크 모드 토글
+    const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+    function switchTheme(e) {
+        if (e.target.checked) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+    }
+    toggleSwitch.addEventListener('change', switchTheme);
+
+    // 2. 더 읽기 버튼 기능
+    function toggleReadMore(btn) {
+        const content = btn.previousElementSibling;
+        content.classList.toggle('expanded');
+        if (content.classList.contains('expanded')) {
+            btn.textContent = "접기";
+        } else {
+            btn.textContent = "더 읽기";
+        }
+    }
+
+    // 3. 촛불 켜기 기능
+    function lightCandle(num) {
+        const flames = document.querySelectorAll('.flame');
+        // 초기화
+        flames.forEach(f => f.style.opacity = 0.2);
+        
+        // 선택된 주차까지 켜기
+        for(let i=0; i<num; i++) {
+            flames[i].style.opacity = 1;
+        }
+    }
+
+    // 4. 어드벤트 캘린더 생성
+    const calendarGrid = document.getElementById('calendar-grid');
+    for (let i = 1; i <= 24; i++) {
+        const door = document.createElement('div');
+        door.className = 'cal-door';
+        door.textContent = i;
+        door.onclick = function() {
+            if (i === 24) {
+                alert("12월 24일: 메리 크리스마스! 오늘 밤 예수님이 탄생합니다!");
+            } else if (i === 6) {
+                alert("12월 6일: 성 니콜라우스 데이! 부츠를 확인하세요.");
+            } else {
+                alert(i + "일: 작은 초콜릿을 발견했습니다!");
+            }
+            this.style.background = 'var(--gold)';
+            this.style.color = '#333';
+        };
+        calendarGrid.appendChild(door);
+    }
+
+    // 5. 퀴즈 정답 확인
+    function checkQuiz(isYes) {
+        const result = document.getElementById('quiz-result');
+        if (!isYes) {
+            result.textContent = "정답입니다! 독일의 산타(성 니콜라우스)는 12월 6일에 옵니다.";
+            result.style.color = "var(--accent-secondary)";
+        } else {
+            result.textContent = "틀렸습니다. 24일은 아기 예수가 오는 날이고, 산타는 12월 6일입니다.";
+            result.style.color = "var(--accent-color)";
+        }
+    }
+
+    // 6. 스크롤 진행바
+    window.onscroll = function() {
+        let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        let scrolled = (winScroll / height) * 100;
+        document.getElementById("progress-bar").style.width = scrolled + "%";
+    };
+
+    // 7. 눈 내리는 효과 (Canvas)
+    const canvas = document.getElementById('snow-canvas');
+    const ctx = canvas.getContext('2d');
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    const snowflakes = [];
+    function createSnowflake() {
+        return {
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: Math.random() * 3 + 1,
+            speed: Math.random() * 2 + 0.5,
+            opacity: Math.random()
+        };
+    }
+
+    for (let i = 0; i < 100; i++) {
+        snowflakes.push(createSnowflake());
+    }
+
+    function drawSnow() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.beginPath();
+        for (let i = 0; i < snowflakes.length; i++) {
+            let f = snowflakes[i];
+            ctx.moveTo(f.x, f.y);
+            ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2, true);
+        }
+        ctx.fill();
+        moveSnow();
+    }
+
+    function moveSnow() {
+        for (let i = 0; i < snowflakes.length; i++) {
+            let f = snowflakes[i];
+            f.y += f.speed;
+            if (f.y > height) f.y = 0;
+        }
+        requestAnimationFrame(drawSnow);
+    }
+
+    // 창 크기 변경 대응
+    window.addEventListener('resize', function() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+    });
+
+    drawSnow(); // 애니메이션 시작
+</script>
+
+</body>
+</html>
