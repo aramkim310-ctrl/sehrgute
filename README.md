@@ -1,13 +1,13 @@
 # sehrgute
 
-저장소에 포함된 파일들입니다.
+독일 크리스마스의 마법 — 인터랙티브 슬라이드
 
-## 파일 목록
+- 파일: `ch_german.html`
+- GitHub 파일 URL: https://github.com/aramkim310-ctrl/sehrgute/blob/df576e9e454c0d882bf28b69f7a32647a4c6ba0a/ch_german.html
+- Commit OID: df576e9e454c0d882bf28b69f7a32647a4c6ba0a
 
-| 파일명 | 설명 | 외부 접근 URL |
-|--------|------|-------------|
-| [index.html](index.html) | 메인 페이지 | https://github.com/aramkim310-ctrl/sehrgute/blob/main/index.html |
-| [ai_studio_ch.html](ai_studio_ch.html) | AI Studio CH 페이지 | https://github.com/aramkim310-ctrl/sehrgute/blob/main/ai_studio_ch.html |
-| [ai_studio_code_8_url.txt](ai_studio_code_8_url.txt) | AI Studio 코드 8 URL 정보 | https://github.com/aramkim310-ctrl/sehrgute/blob/main/ai_studio_code_8_url.txt |
-| [docs/index.html](docs/index.html) | 문서 페이지 | https://github.com/aramkim310-ctrl/sehrgute/blob/main/docs/index.html |
-| [README.md](README.md) | 이 파일 | https://github.com/aramkim310-ctrl/sehrgute/blob/main/README.md |
+사용 방법:
+1. 위 링크를 클릭하여 GitHub에서 `ch_german.html` 파일을 확인하세요.
+2. 로컬로 다운로드 후 브라우저에서 열어 프레젠테이션을 확인할 수 있습니다.
+
+(이 README는 요청에 따라 `ch_german.html`의 링크를 정리한 파일입니다.)
